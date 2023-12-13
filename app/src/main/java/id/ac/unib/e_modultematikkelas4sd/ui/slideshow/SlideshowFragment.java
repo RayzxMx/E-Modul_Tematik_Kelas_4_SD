@@ -10,6 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.github.barteksc.pdfviewer.PDFView;
+
+import java.io.InputStream;
+
+import id.ac.unib.e_modultematikkelas4sd.R;
 import id.ac.unib.e_modultematikkelas4sd.databinding.FragmentSlideshowBinding;
 
 public class SlideshowFragment extends Fragment {
@@ -24,8 +29,13 @@ public class SlideshowFragment extends Fragment {
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        PDFView pdfView = binding.pdfView;
+        InputStream inputStream = getResources().openRawResource(R.raw.poin_integrasi);
+
+        // Menampilkan PDF dari InputStream
+        pdfView.fromStream(inputStream)
+                .pages(0) // Menampilkan halaman pertama (0-based index)
+                .load();
         return root;
     }
 

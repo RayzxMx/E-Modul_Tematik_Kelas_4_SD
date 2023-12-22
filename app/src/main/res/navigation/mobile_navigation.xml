@@ -12,6 +12,17 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/nav_materi"
+        android:name="id.ac.unib.e_modultematikkelas4sd.ui.home.MateriFragment"
+        android:label="Materi"
+        tools:layout="@layout/fragment_materi" />
+    <fragment
+        android:id="@+id/nav_latihan"
+        android:name="id.ac.unib.e_modultematikkelas4sd.ui.latihan.LatihanFragment"
+        tools:layout="@layout/fragment_latihan"
+        android:label="Latihan" />
+
+    <fragment
         android:id="@+id/nav_gallery"
         android:name="id.ac.unib.e_modultematikkelas4sd.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"

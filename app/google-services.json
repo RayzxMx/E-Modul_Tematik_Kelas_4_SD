@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "172548858277",
+    "firebase_url": "https://emodul-9a2bd-default-rtdb.firebaseio.com",
+    "project_id": "emodul-9a2bd",
+    "storage_bucket": "emodul-9a2bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172548858277:android:d97ccb45f724221c25084c",
+        "android_client_info": {
+          "package_name": "id.ac.unib.e_modultematikkelas4sd"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASEUhHNDC7wmQX9MM4pK3gTyvMf4uTUyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

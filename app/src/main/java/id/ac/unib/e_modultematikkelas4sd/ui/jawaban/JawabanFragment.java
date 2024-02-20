@@ -1,28 +1,21 @@
-package id.ac.unib.e_modultematikkelas4sd.ui.latihan;
+package id.ac.unib.e_modultematikkelas4sd.ui.jawaban;
 
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,26 +30,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.ac.unib.e_modultematikkelas4sd.R;
-import id.ac.unib.e_modultematikkelas4sd.databinding.FragmentLatihanBinding;
+import id.ac.unib.e_modultematikkelas4sd.databinding.FragmentJawabanBinding;
 import id.ac.unib.e_modultematikkelas4sd.databinding.FragmentPertanyaanBinding;
-import id.ac.unib.e_modultematikkelas4sd.ui.home.HomeFragment;
+import id.ac.unib.e_modultematikkelas4sd.ui.latihan.Jawaban;
+import id.ac.unib.e_modultematikkelas4sd.ui.latihan.Latihan;
+import id.ac.unib.e_modultematikkelas4sd.ui.latihan.LatihanAdapter;
 
-public class PertanyaanFragment extends Fragment {
-    private FragmentPertanyaanBinding binding;
-    private List<Latihan> latihanList = new ArrayList<>();
+public class JawabanFragment extends Fragment {
+    private FragmentJawabanBinding binding;
+    private final List<Latihan> latihanList = new ArrayList<>();
     private SharedPreferences sharedPreferences;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentPertanyaanBinding.inflate(inflater, container, false);
+        binding = FragmentJawabanBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         // Mendapatkan DatabaseReference untuk child "latihan"
-        DatabaseReference latihanRef = FirebaseDatabase.getInstance().getReference().child("latihan");
+        DatabaseReference latihanRef = FirebaseDatabase.getInstance().getReference().child("jawaban");
         sharedPreferences = getActivity().getSharedPreferences("MyAppPreferences", MODE_PRIVATE);
-        int listLatihanId = sharedPreferences.getInt("listLatihanId", 1);
+        String selectedItem = sharedPreferences.getString("selectedItem", "null");
         // Membuat query untuk mendapatkan data dengan key "bab" yang sama dengan 1
-        Query query = latihanRef.orderByChild("bab").equalTo(listLatihanId);
+        Query query = latihanRef.orderByChild("username").equalTo(selectedItem);
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -88,14 +83,12 @@ public class PertanyaanFragment extends Fragment {
                                 View viewChild = recyclerView.getChildAt(i);
                                 EditText editText = viewChild.findViewById(R.id.jawabanET);
                                 String ans = String.valueOf(editText.getText());
-                                String username = sharedPreferences.getString("username", "null");
                                 jawabanList.add(new Jawaban(ans,
                                         latihanList.get(i).getId(),
                                         latihanList.get(i).getBab(),
-                                        username));
+                                        "null"));
                             }
                             addDataToFirebase(jawabanList);
-                            switch_fragment();
                         }
                     });
 
@@ -163,25 +156,5 @@ public class PertanyaanFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-    public void switch_fragment(){
-
-        // Mendapatkan instance dari FragmentManager
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-        // Membuat transaksi fragment
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        // Membuat instance dari fragment yang akan ditampilkan
-        Fragment fragment = new HomeFragment(); // Gantilah TargetFragment dengan fragment yang ingin Anda tampilkan
-
-        // Mengganti fragment yang saat ini ditampilkan dengan fragment yang baru
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-
-        // Menambahkan transaksi ke back stack (jika diperlukan, agar pengguna dapat kembali)
-        fragmentTransaction.addToBackStack(null);
-        // Melakukan commit transaksi
-        fragmentTransaction.commit();
-
     }
 }

@@ -1,131 +1,132 @@
 package id.ac.unib.e_modultematikkelas4sd.ui.Register;
 
-import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
-import id.ac.unib.e_modultematikkelas4sd.R;
-import id.ac.unib.e_modultematikkelas4sd.databinding.ActivityLoginBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import id.ac.unib.e_modultematikkelas4sd.MainActivity;
+import id.ac.unib.e_modultematikkelas4sd.databinding.ActivityRegisterBinding;
+import id.ac.unib.e_modultematikkelas4sd.ui.login.LoginActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private LoginViewModel loginViewModel;
-    private ActivityLoginBinding binding;
-
+    private ActivityRegisterBinding binding;
+    private SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    private DatabaseReference mDatabase;
+    private List<User> dataList = new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        // Mendapatkan objek SharedPreferences
+        sharedPreferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE);
+        // Membuat objek Editor untuk mengedit SharedPreferences
+        editor = sharedPreferences.edit();
+        String[] data = {"Role","Guru", "Siswa"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data) {
+            @Override
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
 
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+                // Jika ini adalah placeholder, atur teks menjadi abu-abu atau sesuai kebutuhan
+                if (position == 0) {
+                    ((TextView) view).setTextColor(Color.GRAY);
+                } else {
+                    ((TextView) view).setTextColor(Color.BLACK);
+                }
+
+                return view;
+            }
+        };
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
-        final Button loginButton = binding.login;
+        final EditText konfirmEditText = binding.konfPassword;
+        final EditText namaEditText = binding.nama;
+        final Button daftarButton = binding.login;
         final ProgressBar loadingProgressBar = binding.loading;
-
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
-            @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                }
-            }
-        });
-
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                }
-                setResult(Activity.RESULT_OK);
-
-                //Complete and destroy login activity once successful
-                finish();
-            }
-        });
-
-        TextWatcher afterTextChangedListener = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
-        };
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                }
-                return false;
-            }
-        });
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        final Spinner spinner = binding.role;
+        spinner.setAdapter(adapter);
+        daftarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+
+                daftar(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString(),
+                        konfirmEditText.getText().toString(),
+                        spinner,
+                        namaEditText.getText().toString());
             }
         });
+
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+    public void daftar(String username, String password, String konfirm, Spinner roleSpin, String nama){
+        if (username.isEmpty()){
+            Toast.makeText(getApplicationContext(), "Username Kosong, Mohon diisi", Toast.LENGTH_SHORT).show();
+        } else if (password.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Password Kosong, Mohon diisi", Toast.LENGTH_SHORT).show();
+        } else if (konfirm.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Konfirmasi Password Kosong, Mohon diisi", Toast.LENGTH_SHORT).show();
+        } else if (nama.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Nama Kosong, Mohon diisi", Toast.LENGTH_SHORT).show();
+        } else if (!konfirm.equals(password)) {
+            Toast.makeText(getApplicationContext(), "Konfirmasi Password Tidak Sama Dengan Password, Mohon diisi Ulang", Toast.LENGTH_SHORT).show();
+        } else if (roleSpin.getSelectedItemPosition() == 0) {
+            Toast.makeText(getApplicationContext(), "Tolong Pilih Role Anda", Toast.LENGTH_SHORT).show();
+        } else {
+            dataList.add(new User(nama, password, username, roleSpin.getSelectedItem().toString().toLowerCase()));
+            addDataToFirebase(dataList);
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
     }
 
-    private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    private void addDataToFirebase(List<User> data) {
+        DatabaseReference jawabanRef = FirebaseDatabase.getInstance().getReference().child("user");
+        for (User user : data) {
+            String key = jawabanRef.push().getKey(); // Dapatkan kunci unik baru untuk setiap entri
+
+            // Simpan JawabanModel ke Firebase dengan kunci unik
+            jawabanRef.child(key).setValue(user)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(), "Data added to Firebase", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Failed to add data to Firebase", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
     }
+
 }

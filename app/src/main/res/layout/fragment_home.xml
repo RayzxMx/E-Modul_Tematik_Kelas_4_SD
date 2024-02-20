@@ -7,16 +7,17 @@
     tools:context=".ui.home.HomeFragment"
     android:background="#fdf2f0"
     android:id="@+id/fragment_container">
+
     <ImageView
-        android:layout_width="360dp"
-        android:layout_height="240dp"
+        android:layout_width="324dp"
+        android:layout_height="192dp"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
         android:src="@mipmap/ic_bg"
         app:layout_constraintBottom_toTopOf="@+id/konten"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        android:scaleType="fitCenter"
-        android:padding="0dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/title" />
     <View
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -94,21 +95,23 @@
                 android:layout_height="wrap_content">
 
                 <ImageButton
+                    android:contentDescription="@string/tombol_materi"
                     android:id="@+id/btn_materi"
                     android:scaleType="fitCenter"
                     android:src="@mipmap/ic_materi"
                     android:layout_width="110dp"
-                    android:layout_height="160dp"
+                    android:layout_height="130dp"
                     android:backgroundTint="@color/white"
                     android:paddingHorizontal="0dp"
                     android:paddingBottom="0dp"/>
 
                 <ImageButton
+                    android:contentDescription="@string/tombol_petunjuk"
                     android:id="@+id/petunjuk"
                     android:scaleType="fitCenter"
                     android:src="@mipmap/ic_petunjuk"
                     android:layout_width="110dp"
-                    android:layout_height="160dp"
+                    android:layout_height="130dp"
                     android:backgroundTint="@color/white"
                     android:layout_marginStart="57dp"
                     android:paddingHorizontal="0dp"
@@ -122,23 +125,41 @@
                 android:layout_marginTop="46dp">
 
                 <ImageButton
+                    android:contentDescription="@string/tombol_poin_integrasi"
                     android:id="@+id/btn_poin"
                     android:scaleType="fitCenter"
                     android:src="@mipmap/ic_poin"
                     android:layout_width="110dp"
-                    android:layout_height="160dp"
+                    android:layout_height="130dp"
                     android:backgroundTint="@color/white"
                     android:paddingHorizontal="0dp"
                     android:paddingBottom="0dp"/>
 
                 <ImageButton
+                    android:contentDescription="@string/tombol_tentang"
                     android:id="@+id/btn_tentang"
                     android:scaleType="fitCenter"
                     android:src="@mipmap/ic_tentang"
                     android:layout_width="110dp"
-                    android:layout_height="160dp"
+                    android:layout_height="130dp"
                     android:backgroundTint="@color/white"
                     android:layout_marginStart="57dp"
+                    android:paddingHorizontal="0dp"
+                    android:paddingBottom="0dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="46dp"
+                android:gravity="center">
+                <ImageButton
+                    android:contentDescription="@string/tombol_evaluasi"
+                    android:id="@+id/evaluasi"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/ic_petunjuk"
+                    android:layout_width="110dp"
+                    android:layout_height="130dp"
+                    android:backgroundTint="@color/white"
                     android:paddingHorizontal="0dp"
                     android:paddingBottom="0dp"/>
             </LinearLayout>

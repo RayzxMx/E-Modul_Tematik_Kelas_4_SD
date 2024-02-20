@@ -2,8 +2,7 @@
     <string name="app_name">E-Modul Tematik Kelas 4 SD</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Nama User</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -73,4 +72,22 @@
     <string name="latihan">Latihan</string>
     <string name="keluar">Keluar</string>
     <string name="kirim">Kirim</string>
+    <string name="nama">Nama</string>
+    <string name="tombol_materi">Tombol Materi</string>
+    <string name="tombol_petunjuk">Tombol Petunjuk</string>
+    <string name="tombol_tentang">Tombol Tentang</string>
+    <string name="tombol_poin_integrasi">Tombol Poin Integrasi</string>
+    <string name="jawaban">Jawaban</string>
+    <string name="koreksi_latihan">Koreksi Latihan</string>
+    <string name="benar">Benar</string>
+    <string name="salah">Salah</string>
+    <string name="simpan">Simpan</string>
+    <string name="nilai_per_soal">Nilai Per Soal :</string>
+    <string name="_100_100">100/100</string>
+    <string name="lihat_nilai">Lihat Nilai</string>
+    <string name="namaOwner">Dalifa</string>
+    <string name="npmOwner">A3K018004</string>
+    <string name="prodiOwner">Program Studi Doktor Pendidikan</string>
+    <string name="fakultasOwner">FKIP Universitas Bengkulu</string>
+    <string name="tombol_evaluasi">tombol evaluasi</string>
 </resources>

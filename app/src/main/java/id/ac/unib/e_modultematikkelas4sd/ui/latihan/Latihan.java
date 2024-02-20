@@ -1,23 +1,39 @@
 package id.ac.unib.e_modultematikkelas4sd.ui.latihan;
 
+import android.util.Log;
+
 public class Latihan {
-    private String soal;
-
-    public Latihan() {
-        // Diperlukan untuk Firebase (default constructor)
+    private String id;
+    private String pertanyaan;
+    private Integer bab;
+    public Latihan(String pertanyaan, String id, Integer bab) {
+        this.pertanyaan = pertanyaan;
+        this.id = id;
+        this.bab = bab;
     }
 
-    public Latihan(String soal) {
-        this.soal = soal;
+    public String getId() {
+        return id;
     }
 
-    // Getter dan setter
-    public String getJudul() {
-        return soal;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setJudul(String soal) {
-        this.soal = soal;
+    public String getPertanyaan() {
+        return pertanyaan;
     }
 
+    public void setPertanyaan(String pertanyaan) {
+        this.pertanyaan = pertanyaan;
+    }
+
+    public Integer getBab() {
+        return bab;
+    }
+
+    public void setBab(Integer bab) {
+        this.bab = bab;
+    }
 }
+

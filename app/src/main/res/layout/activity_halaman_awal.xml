@@ -38,13 +38,13 @@
             android:id="@+id/gambar_welcome"
             android:layout_width="334dp"
             android:layout_height="334dp"
-            android:layout_marginVertical="18dp"
+            android:layout_marginVertical="0dp"
             android:src="@mipmap/ic_welcome" />
 
         <Button
             android:id="@+id/btn_masuk"
             android:layout_width="150dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:backgroundTint="#E1F5FE"
             android:text="@string/masuk"
             android:textAlignment="center"
@@ -56,7 +56,7 @@
         <Button
             android:id="@+id/btn_daftar"
             android:layout_width="150dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/white"
             android:backgroundTintMode="screen"

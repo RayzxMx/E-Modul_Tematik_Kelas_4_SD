@@ -1,39 +1,52 @@
-package id.ac.unib.e_modultematikkelas4sd.ui.latihan;
-
+package id.ac.unib.e_modultematikkelas4sd.ui.latihan;// CustomAdapter.java
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
+import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import id.ac.unib.e_modultematikkelas4sd.R;
 
-public class LatihanAdapter extends RecyclerView.Adapter<LatihanViewHolder> {
-    private ArrayList<Latihan> latihanList;
+public class LatihanAdapter extends RecyclerView.Adapter<LatihanAdapter.ViewHolder> {
 
-    public LatihanAdapter(ArrayList<Latihan> latihanList) {
-        this.latihanList = latihanList;
+    private List<Latihan> dataList;
+    private Context context;
+
+    public LatihanAdapter(Context context, List<Latihan> dataList) {
+        this.context = context;
+        this.dataList = dataList;
     }
 
-    @NonNull
+    // ViewHolder untuk menahan referensi dari View
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView textViewItem;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            textViewItem = itemView.findViewById(R.id.soalText);
+        }
+    }
+
+    // Method untuk meng-inflate layout item_list.xml ke ViewHolder
     @Override
-    public LatihanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_card_pertanyaan, parent, false);
-        return new LatihanViewHolder(view);
+        return new ViewHolder(view);
     }
 
+    // Method untuk menghubungkan data di dalam list dengan ViewHolder
     @Override
-    public void onBindViewHolder(@NonNull LatihanViewHolder holder, int position) {
-        Latihan latihan = latihanList.get(position);
-        holder.bindData(latihan);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        String data = dataList.get(position).getPertanyaan();
+        holder.textViewItem.setText(data);
     }
 
+    // Method untuk mendapatkan jumlah data yang akan ditampilkan
     @Override
     public int getItemCount() {
-        return latihanList.size();
+        return dataList.size();
     }
 }
-

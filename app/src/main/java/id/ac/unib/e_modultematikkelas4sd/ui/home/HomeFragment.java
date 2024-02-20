@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import id.ac.unib.e_modultematikkelas4sd.R;
 import id.ac.unib.e_modultematikkelas4sd.databinding.FragmentHomeBinding;
+import id.ac.unib.e_modultematikkelas4sd.ui.tentang.TentangKami;
 
 public class HomeFragment extends Fragment {
 
@@ -52,7 +53,7 @@ public class HomeFragment extends Fragment {
         btnTentang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //showPetunjuk();
+                showTentang();
             }
         });
         return root;
@@ -120,4 +121,25 @@ public class HomeFragment extends Fragment {
         fragmentTransaction.commit();
 
     }
+
+    public void showTentang(){
+        // Mendapatkan instance dari FragmentManager
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+        // Membuat transaksi fragment
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // Membuat instance dari fragment yang akan ditampilkan
+        Fragment fragment = new TentangKami(); // Gantilah TargetFragment dengan fragment yang ingin Anda tampilkan
+
+        // Mengganti fragment yang saat ini ditampilkan dengan fragment yang baru
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+
+        // Menambahkan transaksi ke back stack (jika diperlukan, agar pengguna dapat kembali)
+        fragmentTransaction.addToBackStack(null);
+        // Melakukan commit transaksi
+        fragmentTransaction.commit();
+
+    }
+
 }

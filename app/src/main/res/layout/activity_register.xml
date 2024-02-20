@@ -49,6 +49,17 @@
             android:selectAllOnFocus="true" />
 
         <EditText
+            android:id="@+id/nama"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="18dp"
+            android:hint="@string/nama"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/btn_bg"
+            android:selectAllOnFocus="true" />
+
+        <EditText
             android:id="@+id/password"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
@@ -58,7 +69,6 @@
             android:background="@drawable/btn_bg"
             android:imeActionLabel="@string/action_sign_in_short"
             android:imeOptions="actionDone"
-            android:inputType="textPassword"
             android:selectAllOnFocus="true"
             />
         <EditText
@@ -71,10 +81,16 @@
             android:background="@drawable/btn_bg"
             android:imeActionLabel="@string/action_sign_in_short"
             android:imeOptions="actionDone"
-            android:inputType="textPassword"
             android:selectAllOnFocus="true"
              />
+        <Spinner
+            android:id="@+id/role"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/combo_bg"
 
+            />
         <Button
             android:id="@+id/login"
             android:layout_width="150dp"

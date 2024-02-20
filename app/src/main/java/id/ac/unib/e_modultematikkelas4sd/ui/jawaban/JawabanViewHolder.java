@@ -1,4 +1,4 @@
-package id.ac.unib.e_modultematikkelas4sd.ui.latihan;
+package id.ac.unib.e_modultematikkelas4sd.ui.jawaban;
 
 import android.util.Log;
 import android.view.View;
@@ -8,13 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import id.ac.unib.e_modultematikkelas4sd.R;
+import id.ac.unib.e_modultematikkelas4sd.ui.latihan.Latihan;
 
-public class LatihanViewHolder extends RecyclerView.ViewHolder {
+public class JawabanViewHolder extends RecyclerView.ViewHolder {
     TextView pertanyaanTextView;
 
-    public LatihanViewHolder(@NonNull View itemView) {
+    public JawabanViewHolder(@NonNull View itemView) {
         super(itemView);
-        Log.d("coba", "View Hilder Terbentuk");
         pertanyaanTextView = itemView.findViewById(R.id.soalText);
     }
 
